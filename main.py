@@ -29,19 +29,17 @@ def gemini(text):
     try:
         model = genai.GenerativeModel('gemini-pro')
         response = model.generate_content(
-            prompt=['''You are a professional accountant. Here is a row extracted from a bank transaction Excel sheet. Its headers are:
-                      - date
-                      - description
-                      - credit
-                      - debit
-                      - balance
-
-                      Please note:
-                      - If the transaction is a credit, the amount is coming into our account.
-                      - If the transaction is a debit, the amount is going out of our account.
-
-                      Please tell me what is the best account to assign this transaction to? Give me a direct answer without any explanation.''',
-                    text]
+            prompt=['''You are a professional accountant tasked with assigning accounts to bank transactions based on accounting standards. Here is a row extracted from a bank transaction Excel sheet with the following headers:
+    - Date
+    - Description
+    - Credit
+    - Debit
+    - Balance
+    Please note:
+    - If the transaction is a credit, the amount is coming into our account.
+    - If the transaction is a debit, the amount is going out of our account.
+    Based on accounting principles, please suggest the best account to assign this transaction to. Provide a direct answer without explanation.
+    ''', text]
         )
 
         response_text = response[0].text
@@ -57,18 +55,18 @@ def ollama_ai(text):
         response = ollama.chat(model='llama3', messages=[
             {
                 'role': 'user',
-                'content': f'{text}\nYou are a professional accountant. Here is a row extracted from a bank transaction Excel sheet. Its headers are:\n'
-                           '- date\n'
-                           '- description\n'
-                           '- credit\n'
-                           '- debit\n'
-                           '- balance\n'
-                           '\n'
-                           'Please note:\n'
-                           '- If the transaction is a credit, the amount is coming into our account.\n'
-                           '- If the transaction is a debit, the amount is going out of our account.\n'
-                           '\n'
-                           'Please tell me what is the best account to assign this transaction to? Give me a direct answer without any explanation.\n'
+                'content': f'{text}\nYou are a professional accountant tasked with assigning accounts to bank transactions based on accounting standards. Here is a row extracted from a bank transaction Excel sheet with the following headers:\n'
+                '- Date\n'
+                '- Description\n'
+                '- Credit\n'
+                '- Debit\n'
+                '- Balance\n'
+                '\n'
+                'Please note:\n'
+                '- If the transaction is a credit, the amount is coming into our account.\n'
+                '- If the transaction is a debit, the amount is going out of our account.\n'
+                '\n'
+                'Based on accounting principles, please suggest the best account to assign this transaction to. Provide a direct answer without explanation.\n'
             },
         ])
 
@@ -117,9 +115,11 @@ print("\nProcessed DataFrame:")
 print(df)
 
 # Save the new DataFrame to an Excel file
-output_file_path = r'C:\Users\user\Desktop\bankai\transactions-with-accounts.xls'
+output_file_path = r'C:\Users\user\Desktop\bankai\transactions-with-accounts.xlsx'
 try:
-    df.to_excel(output_file_path, index=False)
+    df.to_excel(output_file_path, index=False, engine='xlsx')
     logging.info(f"DataFrame successfully saved to {output_file_path}")
 except Exception as e:
     logging.error(f"Error saving DataFrame to file: {e}")
+
+logging.info("Script execution completed.")
