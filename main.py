@@ -38,7 +38,7 @@ def gemini(text):
     Please note:
     - If the transaction is a credit, the amount is coming into our account.
     - If the transaction is a debit, the amount is going out of our account.
-    Based on accounting principles, please suggest the best account to assign this transaction to. Provide a direct answer without explanation.
+    Based on accounting principles, Please suggest the best account to assign this transaction to in the format "high-level account - subaccount". Provide a direct answer without explanation.
     ''', text]
         )
 
@@ -66,7 +66,7 @@ def ollama_ai(text):
                 '- If the transaction is a credit, the amount is coming into our account.\n'
                 '- If the transaction is a debit, the amount is going out of our account.\n'
                 '\n'
-                'Based on accounting principles, please suggest the best account to assign this transaction to. Provide a direct answer without explanation.\n'
+                'Based on accounting principles, Please suggest the best account to assign this transaction to in the format "high-level account - subaccount". Provide a direct answer without explanation.\n'
             },
         ])
 
